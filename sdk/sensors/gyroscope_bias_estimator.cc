@@ -56,7 +56,7 @@ const float kGyroscopeDeltaStaticThreshold = 0.03f;
 // If the gyroscope value is above this threshold, don't update the gyroscope
 // bias estimation. This threshold is applied to the magnitude of gyroscope
 // vectors in radians/s.
-const float kGyroscopeForBiasThreshold = 0.30f;
+const float kGyroscopeForBiasThreshold = 0.01f;
 
 // Used to monitor if accelerometer and gyroscope have been static for a few
 // frames.
