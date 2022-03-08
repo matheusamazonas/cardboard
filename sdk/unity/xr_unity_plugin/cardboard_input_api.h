@@ -61,6 +61,8 @@ class CardboardInputApi {
 
   /// @brief Flags a head tracker recentering request.
   static void SetHeadTrackerRecenterRequested();
+  
+  static void SetGyroscopeBiasThreshold(float threshold);
 
  private:
   // @brief Custom deleter for HeadTracker.
@@ -90,6 +92,8 @@ class CardboardInputApi {
 
   // @brief Tracks head tracker recentering requests.
   static std::atomic<bool> head_tracker_recenter_requested_;
+  
+  static std::atomic<float> head_tracker_gyroscope_bias_threshold_;
 };
 
 #ifdef __cplusplus
@@ -103,6 +107,8 @@ void CardboardUnity_setViewportOrientation(
 
 /// @brief Flags a head tracker recentering request.
 void CardboardUnity_recenterHeadTracker();
+
+void CardboardUnity_setGyroscopeBiasThreshold(float threshold);
 
 #ifdef __cplusplus
 }

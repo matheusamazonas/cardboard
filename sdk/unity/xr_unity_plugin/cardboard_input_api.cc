@@ -63,6 +63,7 @@ std::atomic<CardboardViewportOrientation>
     CardboardInputApi::selected_viewport_orientation_(kLandscapeLeft);
 
 std::atomic<bool> CardboardInputApi::head_tracker_recenter_requested_(false);
+std::atomic<float> CardboardInputApi::head_tracker_gyroscope_bias_threshold_(0.3f);
 
 void CardboardInputApi::InitHeadTracker() {
   if (head_tracker_ == nullptr) {
@@ -109,7 +110,7 @@ void CardboardInputApi::GetHeadTrackerPose(float* position,
 
   CardboardHeadTracker_getPose(
       head_tracker_.get(), GetBootTimeNano() + kPredictionTimeWithoutVsyncNanos,
-      selected_viewport_orientation_, position, orientation);
+      selected_viewport_orientation_, position, orientation, head_tracker_gyroscope_bias_threshold_);
 }
 
 void CardboardInputApi::SetViewportOrientation(
@@ -119,6 +120,10 @@ void CardboardInputApi::SetViewportOrientation(
 
 void CardboardInputApi::SetHeadTrackerRecenterRequested() {
   head_tracker_recenter_requested_ = true;
+}
+
+void CardboardInputApi::SetGyroscopeBiasThreshold(float threshold) {
+  head_tracker_gyroscope_bias_threshold_ = threshold;
 }
 
 int64_t CardboardInputApi::GetBootTimeNano() {
@@ -170,6 +175,11 @@ void CardboardUnity_setViewportOrientation(
 
 void CardboardUnity_recenterHeadTracker() {
   cardboard::unity::CardboardInputApi::SetHeadTrackerRecenterRequested();
+}
+
+void CardboardUnity_setGyroscopeBiasThreshold(float threshold) {
+  cardboard::unity::CardboardInputApi::SetGyroscopeBiasThreshold(threshold);
+  LOGD("Set gyro bias to %f", threshold);
 }
 
 #ifdef __cplusplus

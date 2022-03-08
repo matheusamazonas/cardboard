@@ -155,7 +155,9 @@ void HeadTracker::Resume() {
 void HeadTracker::GetPose(int64_t timestamp_ns,
                           CardboardViewportOrientation viewport_orientation,
                           std::array<float, 3>& out_position,
-                          std::array<float, 4>& out_orientation) {
+                          std::array<float, 4>& out_orientation,
+                          const float gyroscope_for_bias_threshold) {
+  sensor_fusion_->UpdateGyroscopeBiasThreshold(gyroscope_for_bias_threshold);
   const Vector4 orientation =
       GetRotation(viewport_orientation, timestamp_ns).GetQuaternion();
 

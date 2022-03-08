@@ -53,11 +53,6 @@ const float kAccelerometerDeltaStaticThreshold = 0.5f;
 // consider the phone static.
 const float kGyroscopeDeltaStaticThreshold = 0.03f;
 
-// If the gyroscope value is above this threshold, don't update the gyroscope
-// bias estimation. This threshold is applied to the magnitude of gyroscope
-// vectors in radians/s.
-const float kGyroscopeForBiasThreshold = 0.30f;
-
 // Used to monitor if accelerometer and gyroscope have been static for a few
 // frames.
 const int kStaticFrameDetectionThreshold = 50;
@@ -260,12 +255,12 @@ bool GyroscopeBiasEstimator::UpdateGyroscopeBias(
   // If magnitude is too big, don't update the filter at all so that we don't
   // artificially increase the number of samples accumulated by the filter.
   const float gyroscope_sample_norm2 = Length(gyroscope_sample);
-  if (gyroscope_sample_norm2 >= kGyroscopeForBiasThreshold) {
+  if (gyroscope_sample_norm2 >= gyroscope_for_bias_threshold_) {
     return false;
   }
 
   float update_weight = std::max(
-      0.0f, 1.0f - gyroscope_sample_norm2 / kGyroscopeForBiasThreshold);
+      0.0f, 1.0f - gyroscope_sample_norm2 / gyroscope_for_bias_threshold_);
   update_weight *= update_weight;
   gyroscope_bias_lowpass_filter_.AddWeightedSample(
       gyroscope_lowpass_filter_.GetFilteredData(), timestamp_ns, update_weight);
@@ -311,4 +306,8 @@ bool GyroscopeBiasEstimator::IsCurrentEstimateValid() const {
   return isStatic;
 }
 
-}  // namespace cardboard
+void GyroscopeBiasEstimator::UpdateGyroscopeBiasThreshold(const float gyroscope_for_bias_threshold) {
+  gyroscope_for_bias_threshold_ = gyroscope_for_bias_threshold;
+}
+
+} // namespace cardboard

@@ -598,7 +598,7 @@ void CardboardHeadTracker_resume(CardboardHeadTracker* head_tracker);
 void CardboardHeadTracker_getPose(
     CardboardHeadTracker* head_tracker, int64_t timestamp_ns,
     CardboardViewportOrientation viewport_orientation, float* position,
-    float* orientation);
+    float* orientation, const float gyroscope_for_bias_threshold);
 
 /// Recenters the head tracker.
 ///

@@ -93,6 +93,8 @@ class GyroscopeBiasEstimator {
   // correct. The device (measured using the sensors) has to be static for this
   // function to return true.
   virtual bool IsCurrentEstimateValid() const;
+  
+  void UpdateGyroscopeBiasThreshold(const float gyroscope_for_bias_threshold);
 
  private:
   // A helper class to keep track of whether some signal can be considered
@@ -122,6 +124,11 @@ class GyroscopeBiasEstimator {
 
   // Sum of the weight of sample used for gyroscope filtering.
   float current_accumulated_weights_gyroscope_bias_;
+  
+  // If the gyroscope value is above this threshold, don't update the gyroscope
+  // bias estimation. This threshold is applied to the magnitude of gyroscope
+  // vectors in radians/s.
+  float gyroscope_for_bias_threshold_ = 0.30f;
 
   // Set of filters for accelerometer data to estimate a rotation
   // based only on accelerometer.

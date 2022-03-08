@@ -241,7 +241,7 @@ GLKMatrix4 HelloCardboardRenderer::GetPose() {
   float outOrientation[4];
   CardboardHeadTracker_getPose(
       _headTracker, clock_gettime_nsec_np(CLOCK_UPTIME_RAW) + kPredictionTimeWithoutVsyncNanos,
-      kLandscapeLeft, outPosition, outOrientation);
+      kLandscapeLeft, outPosition, outOrientation, 0.30f);
   return GLKMatrix4Multiply(
       GLKMatrix4MakeTranslation(outPosition[0], outPosition[1], outPosition[2]),
       GLKMatrix4MakeWithQuaternion(GLKQuaternionMakeWithArray(outOrientation)));

@@ -47,7 +47,8 @@ class HeadTracker {
   void GetPose(int64_t timestamp_ns,
                CardboardViewportOrientation viewport_orientation,
                std::array<float, 3>& out_position,
-               std::array<float, 4>& out_orientation);
+               std::array<float, 4>& out_orientation,
+               const float gyroscope_for_bias_threshold);
 
   // Recenters the head tracker.
   void Recenter();

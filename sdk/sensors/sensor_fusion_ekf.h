@@ -87,6 +87,8 @@ class SensorFusionEkf {
   // @param rotation The Rotation that maps from the Sensor Space
   //                 frame to Start Space.
   void RotateSensorSpaceToStartSpaceTransformation(const Rotation& rotation);
+  
+  void UpdateGyroscopeBiasThreshold(const float gyroscope_for_bias_threshold);
 
  private:
   // Estimates the average timestep between gyroscope event.

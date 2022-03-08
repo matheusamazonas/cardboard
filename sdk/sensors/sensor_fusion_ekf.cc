@@ -389,4 +389,8 @@ void SensorFusionEkf::UpdateMeasurementCovariance() {
                                           accelerometer_noise_sigma;
 }
 
+void SensorFusionEkf::UpdateGyroscopeBiasThreshold(const float gyroscope_bias_threshold) {
+  gyroscope_bias_estimator_.UpdateGyroscopeBiasThreshold(gyroscope_bias_threshold);
+}
+
 }  // namespace cardboard
